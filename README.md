@@ -20,4 +20,9 @@ Odată logat, ușer-ul vă putea adaugă noi platforme pentru a retine parola pe
 
 Prima pagina vă conține form-ul de login și register. În momentul în care ușer-ul este logat își vă putea vedea platformele pentru care are o parola salvata în baza noastră de date.
 
+## Authors
+
+* Viviana Gherasim 
+* Vlad Dieaconu
+
 
