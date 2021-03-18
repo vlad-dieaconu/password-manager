@@ -53,6 +53,7 @@ build/
 **/yarn-debug.log*
 **/yarn-error.log*
 
+**/*.json
 
 ### VS Code ###
 .vscode/
