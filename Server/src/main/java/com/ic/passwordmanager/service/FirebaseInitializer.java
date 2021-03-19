@@ -5,23 +5,28 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
 import java.io.IOException;
 
 @Service
 public class FirebaseInitializer {
 
+    @PostConstruct
     private void initDB() throws IOException {
+        try {
+            FileInputStream serviceAccount =
+                    new FileInputStream("./serviceAccount.json");
 
-        FileInputStream serviceAccount =
-                new FileInputStream("./password-manager-ae863-firebase-adminsdk-3u0j2-cbe90292b5n");
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .setDatabaseUrl("https://password-manager-ae863-default-rtdb.firebaseio.com")
+                    .build();
 
-        FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .build();
-
-        FirebaseApp.initializeApp(options);
-
+            FirebaseApp.initializeApp(options);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 
