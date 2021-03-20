@@ -10,13 +10,22 @@ import com.ic.passwordmanager.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 @Service
 public class FirebaseService {
 
-    public String saveUserDetails(User user) throws ExecutionException, InterruptedException {
+    public String saveUserDetails(User user) throws Exception {
         Firestore dbFirestore = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection("users").document(user.getEmail()).set(user);
+
+        User u;
+        u = UserService.encrpytPassword(user);
+
+        u.setAccounts(user.getAccounts().stream()
+        .map(account -> AccountService.encrpytPassword(account))
+        .collect(Collectors.toList()));
+
+        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection("users").document(user.getEmail()).set(u);
         return collectionsApiFuture.get().getUpdateTime().toString();
     }
 
@@ -32,6 +41,9 @@ public class FirebaseService {
             // convert document to POJO
             user = document.toObject(User.class);
             System.out.println(user);
+            user.setAccounts(user.getAccounts().stream()
+                    .map(account -> AccountService.decryptPassword(account))
+                    .collect(Collectors.toList()));
             return user;
         } else {
             System.out.println("No such document!");
