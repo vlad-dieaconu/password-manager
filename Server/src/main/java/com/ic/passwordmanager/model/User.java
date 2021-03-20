@@ -3,18 +3,22 @@ package com.ic.passwordmanager.model;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class User {
 
 
+    private int id;
     private String email;
     private String password;
-    private ArrayList<Account> accounts;
+    private List<Account> accounts;
 
 
 
-    public User(String email, String password, ArrayList<Account> accounts) {
+
+    public User(String email, String password, List<Account> accounts) {
+
         this.email = email;
         this.password = password;
         this.accounts = accounts;
@@ -23,11 +27,11 @@ public class User {
     public User() {
     }
 
-    public ArrayList<Account> getAccounts() {
+    public List<Account> getAccounts() {
         return accounts;
     }
 
-    public void setAccounts(ArrayList<Account> accounts) {
+    public void setAccounts(List<Account> accounts) {
         this.accounts = accounts;
     }
 
@@ -46,4 +50,7 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
+
 }
