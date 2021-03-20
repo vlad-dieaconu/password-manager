@@ -18,7 +18,7 @@ public class UserController {
         return firebaseService.getUserDetails(email);
     }
     @PostMapping("/createUser")
-    public String postExample(@RequestBody User user) throws ExecutionException, InterruptedException {
+    public String postExample(@RequestBody User user) throws Exception {
         return firebaseService.saveUserDetails(user);
     }
     @PutMapping("/updateUser")
