@@ -1,17 +1,24 @@
 package com.ic.passwordmanager.model;
 
-import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.List;
 
-@Component
+@Entity
 public class User {
 
+    @Id
+    @GeneratedValue
+    private String id;
 
-    private int id;
     private String email;
     private String password;
+
+    @ElementCollection
     private List<Account> accounts;
 
 
@@ -25,6 +32,14 @@ public class User {
     }
 
     public User() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public List<Account> getAccounts() {
