@@ -2,24 +2,37 @@ package com.ic.passwordmanager.model;
 
 
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
+@Table(name="user",
+        uniqueConstraints = {
+        @UniqueConstraint(columnNames = "email")
+})
 public class User {
 
     @Id
     @GeneratedValue
     private String id;
 
+    @NotBlank
     private String email;
+    @NotBlank
     private String password;
 
     @ElementCollection
     private List<Account> accounts;
+
+    @ElementCollection
+    private Set<Role> roles = new HashSet<>();
+
+
 
 
 
@@ -32,6 +45,14 @@ public class User {
     }
 
     public User() {
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set roles) {
+        this.roles = roles;
     }
 
     public String getId() {
@@ -65,7 +86,5 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-
 
 }
