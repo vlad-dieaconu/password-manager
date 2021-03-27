@@ -1,11 +1,15 @@
 import styled from "styled-components";
 
 export const BoxContainer = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 10px;
+width: 280px;
+min-height: 550px;
+display: flex;
+flex-direction: column;
+border-radius: 19px;
+background-color: #fff;
+box-shadow: 0 0 2px rgba(15, 15, 15, 0.28);
+position: relative;
+overflow: hidden;
 `;
 
 export const FormContainer = styled.form`
