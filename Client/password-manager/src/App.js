@@ -1,6 +1,11 @@
+import React, { Component } from "react";
 import './App.css';
+import AccountContext from './app/components/accountContext'
 import styled from "styled-components";
-import { AccountBox } from './components/accountBox';
+import LoginForm from './app/components/loginForm';
+import Profile from './app/components/Profile';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
 
 const AppContainer = styled.div`
   width: 100%;
@@ -11,10 +16,21 @@ const AppContainer = styled.div`
   justify-content: center;
 `;
 
-function App() {
-  return <AppContainer>
-    <AccountBox />
-  </AppContainer>;
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <Switch>
+          <Route path="/" exact={true} component={LoginForm} />
+          <Route path="/home" exact={true} component={LoginForm} />
+          <Route path="/profile" exact={true} component={Profile} />
+          <Route path="/signin" exact={true} component={LoginForm} />
+          {/* <Route path="/signup" exact={true} component={SignUp} /> */}
+        </Switch>
+      </Router>
+    );
+  }
 }
 
 export default App;
+
