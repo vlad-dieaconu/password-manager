@@ -8,6 +8,7 @@ import com.ic.passwordmanager.request.JwtResponse;
 import com.ic.passwordmanager.request.LoginForm;
 import com.ic.passwordmanager.request.SignUpForm;
 import com.ic.passwordmanager.security.jwt.JwtUtils;
+import com.ic.passwordmanager.service.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,12 +57,14 @@ public class AuthRestAPIs {
                 )
         );
 
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = jwtProvider.generateJwtToken(authentication);
 
-        return ResponseEntity.ok(new JwtResponse(jwt));
-
+        return ResponseEntity.ok(new JwtResponse(jwt,userDetails.getEmail(),userDetails.getId(),userDetails.getAccounts()));
     }
 
 
