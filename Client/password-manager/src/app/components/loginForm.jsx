@@ -39,13 +39,14 @@ class LoginForm extends Component {
             );
     }
 
-    // switchToRegister(){
-    //     useContext(AccountContext)
-    // };
+    //  toRegister() {
+    //      console.log("it worked");
+    //  }  
 
     render() {
         return <BoxContainer>
             <FormContainer onSubmit={this.doLogin}>
+                
                 <FormContainer>
                     <Marginer direction="vertical" margin={10} />
                     <Input type="text"
@@ -63,13 +64,17 @@ class LoginForm extends Component {
                         onChange={this.changeHandler}
                     />
                 </FormContainer>
+                
                 <Marginer direction="vertical" margin={15} />
                 <MutedLink href="#">Forgot password?</MutedLink>
                 <Marginer direction="vertical" margin="2em" />
                 <SubmitButton type="submit">Login</SubmitButton>
                 <Marginer direction="vertical" margin="2em" />
-                <MutedLink href="#">Don't have an account? <BoldLink href="#" >Register</BoldLink></MutedLink>
-            </FormContainer></BoxContainer>
+                <MutedLink href="#">Don't have an account?
+                    <BoldLink href="/signup" >Register</BoldLink>
+                </MutedLink>
+            </FormContainer>
+        </BoxContainer>
     }
 }
 export default LoginForm;

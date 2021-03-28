@@ -1,23 +1,119 @@
-import React, {useContext} from "react";
+import React, { useContext, Component } from "react";
 import { BoldLink, BoxContainer, FormContainer, Input, MutedLink, SubmitButton } from "./common";
 import { Marginer } from "./marginer";
 import { AccountContext } from "./accountContext";
+import AuthenticationService from '../services/AuthenticationService';
 
+const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
 
-export function RegisterForm(props) {
-
-    const {switchToLogin} = useContext(AccountContext);
-
-    return <BoxContainer>
-        <FormContainer>
-            <Marginer direction="vertical" margin={10} />
-            <Input type="email" placeholder="Email" />
-            <Input type="password" placeholder="Password" />
-            <Input type="password" placeholder="Confirm Password" />
-        </FormContainer>
-        <Marginer direction="vertical" margin={15} />
-        <SubmitButton type="submit">Signup</SubmitButton>
-        <Marginer direction="vertical" margin="2em" />
-        <MutedLink href="#">Already have an account? <BoldLink href="#" onClick={switchToLogin}>Login</BoldLink></MutedLink>
-    </BoxContainer>
+const validateForm = (errors) => {
+    let valid = true;
+    Object.values(errors).forEach(
+        (val) => val.length > 0 && (valid = false)
+    );
+    return valid;
 }
+
+class RegisterForm extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: "",
+            password: "",
+            message: "",
+            successful: false,
+            validForm: true,
+            errors: {
+                email: '',
+                password: ''
+            }
+        };
+    }
+
+    changeHandler = (event) => {
+        const { name, value } = event.target;
+
+        let errors = this.state.errors;
+
+        switch (name) {
+
+            case 'email':
+                errors.email =
+                    validEmailRegex.test(value)
+                        ? ''
+                        : 'Email is not valid!';
+                break;
+            case 'password':
+                errors.password =
+                    value.length < 8
+                        ? 'Password must be 8 characters long!'
+                        : '';
+                break;
+            default:
+                break;
+        }
+
+        this.setState({ errors, [name]: value }, () => {
+            console.log(errors)
+        })
+    }
+
+    signUp = (e) => {
+        e.preventDefault();
+        const valid = validateForm(this.state.errors);
+        this.setState({ validForm: valid });
+        if (valid) {
+            AuthenticationService.register(
+                this.state.email,
+                this.state.password
+            ).then(
+                response => {
+                    this.setState({
+                        message: response.data.message,
+                        successful: true
+                    });
+                },
+                error => {
+                    console.log("Fail! Error = " + error.toString());
+
+                    this.setState({
+                        successful: false,
+                        message: error.toString()
+                    });
+                }
+            );
+        }
+    }
+
+    //const {switchToLogin} = useContext(AccountContext);
+
+    render() {
+        return <BoxContainer>
+            <FormContainer onSubmit={this.signUp}>
+                <FormContainer>
+                    <Marginer direction="vertical" margin={10} />
+                    <Input type="text"
+                        placeholder="Email"
+                        name="email"
+                        id="email"
+                        value={this.state.email}
+                        onChange={this.changeHandler}
+                    />
+                    <Input type="password"
+                        placeholder="Password"
+                        name="password"
+                        id="password"
+                        value={this.state.password}
+                        onChange={this.changeHandler}
+                    />
+                </FormContainer>
+                <Marginer direction="vertical" margin={15} />
+                <SubmitButton type="submit">Signup</SubmitButton>
+                <Marginer direction="vertical" margin="2em" />
+                <MutedLink href="#">Already have an account? <BoldLink href="/signin">Login</BoldLink></MutedLink>
+            </FormContainer>
+        </BoxContainer>
+    }
+}
+export default RegisterForm;
