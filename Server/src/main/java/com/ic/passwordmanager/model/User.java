@@ -3,6 +3,7 @@ package com.ic.passwordmanager.model;
 
 
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -10,11 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Entity
-@Table(name="user",
-        uniqueConstraints = {
-        @UniqueConstraint(columnNames = "email")
-})
+@Document(collection = "users")
 public class User {
 
     @Id
@@ -29,7 +26,7 @@ public class User {
     @ElementCollection
     private List<Account> accounts;
 
-    @ElementCollection
+    @DBRef
     private Set<Role> roles = new HashSet<>();
 
 

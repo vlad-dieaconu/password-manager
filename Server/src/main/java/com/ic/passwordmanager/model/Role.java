@@ -1,15 +1,16 @@
 package com.ic.passwordmanager.model;
 
-import org.hibernate.annotations.NaturalId;
+
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
 
 
-@Entity
+@Document(collection = "roles")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 60)
@@ -21,11 +22,11 @@ public class Role {
         this.name = name;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

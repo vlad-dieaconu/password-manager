@@ -16,14 +16,20 @@ public class SignUpForm {
     @Email
     private String email;
 
-    private Set role;
+    private Set<String> roles;
 
 
     @NotBlank
     @Size(min = 6, max = 40)
     private String password;
 
+    public Set<String> getRoles() {
+        return roles;
+    }
 
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
+    }
 
     public String getEmail() {
         return email;
@@ -41,7 +47,13 @@ public class SignUpForm {
         this.password = password;
     }
 
+    public Set getRole() {
+        return roles;
+    }
 
+    public void setRole(Set role) {
+        this.roles = role;
+    }
 
     public List<Account> getAccounts(){
         return  new ArrayList<Account>();

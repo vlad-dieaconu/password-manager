@@ -2,7 +2,10 @@ package com.ic.passwordmanager.controller;
 
 import javax.validation.Valid;
 
+import com.ic.passwordmanager.model.Role;
+import com.ic.passwordmanager.model.RoleName;
 import com.ic.passwordmanager.model.User;
+import com.ic.passwordmanager.repositories.RoleRepository;
 import com.ic.passwordmanager.repositories.UserRepository;
 import com.ic.passwordmanager.request.JwtResponse;
 import com.ic.passwordmanager.request.LoginForm;
@@ -23,6 +26,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -36,7 +43,8 @@ public class AuthRestAPIs {
     @Autowired
     UserRepository userRepository;
 
-
+    @Autowired
+    RoleRepository roleRepository;
 
     @Autowired
     PasswordEncoder encoder;
@@ -51,21 +59,25 @@ public class AuthRestAPIs {
         System.out.println(loginRequest.getPassword());
 
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getEmail(),
-                        loginRequest.getPassword()
-                )
-        );
-
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
         String jwt = jwtProvider.generateJwtToken(authentication);
 
-        return ResponseEntity.ok(new JwtResponse(jwt,userDetails.getEmail(),userDetails.getId(),userDetails.getAccounts()));
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(new JwtResponse(
+                jwt,
+                userDetails.getEmail(),
+                userDetails.getId(),
+                userDetails.getAccounts(),
+                roles));
     }
+
+
 
 
     @PostMapping("/signup")
@@ -74,7 +86,30 @@ public class AuthRestAPIs {
             return new ResponseEntity("Fail -> Email is already taken!",
                     HttpStatus.BAD_REQUEST);
         }
+        Set<String> strRoles = signUpRequest.getRoles();
+        Set<Role> roles = new HashSet<>();
 
+        if (strRoles == null) {
+            Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            roles.add(userRole);
+        } else {
+            strRoles.forEach(role -> {
+                switch (role) {
+                    case "admin":
+                        Role adminRole = roleRepository.findByName(RoleName.ROLE_ADMIN)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(adminRole);
+
+                        break;
+
+                    default:
+                        Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(userRole);
+                }
+            });
+        }
 
 
         // Creating user's account
@@ -83,7 +118,7 @@ public class AuthRestAPIs {
                 signUpRequest.getAccounts());
 
 
-
+        user.setRoles(roles);
 
         userRepository.save(user);
 
