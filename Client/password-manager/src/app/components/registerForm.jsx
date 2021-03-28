@@ -3,6 +3,7 @@ import { BoldLink, BoxContainer, FormContainer, Input, MutedLink, SubmitButton }
 import { Marginer } from "./marginer";
 import { AccountContext } from "./accountContext";
 import AuthenticationService from '../services/AuthenticationService';
+import { Alert } from "reactstrap";
 
 const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
 
@@ -89,6 +90,26 @@ class RegisterForm extends Component {
     //const {switchToLogin} = useContext(AccountContext);
 
     render() {
+
+        const errors = this.state.errors;
+
+        let alert = "";
+
+        if (this.state.message) {
+            if (this.state.successful) {
+                alert = (
+                    <Alert variant="success">
+                        {this.state.message}
+                    </Alert>
+                );
+            } else {
+                alert = (
+                    <Alert variant="danger">
+                        {this.state.message}
+                    </Alert>
+                );
+            }
+        }
         return <BoxContainer>
             <FormContainer onSubmit={this.signUp}>
                 <FormContainer>
@@ -100,6 +121,14 @@ class RegisterForm extends Component {
                         value={this.state.email}
                         onChange={this.changeHandler}
                     />
+                    {
+                        errors.email && (
+                            <Alert variant="danger">
+                                {errors.email}
+                            </Alert>
+                        )
+                    }
+
                     <Input type="password"
                         placeholder="Password"
                         name="password"
@@ -107,9 +136,24 @@ class RegisterForm extends Component {
                         value={this.state.password}
                         onChange={this.changeHandler}
                     />
+                    {
+                        errors.password && (
+                            <Alert key="errorspassword" variant="danger">
+                                {errors.password}
+                            </Alert>
+                        )
+                    }
                 </FormContainer>
                 <Marginer direction="vertical" margin={15} />
                 <SubmitButton type="submit">Signup</SubmitButton>
+                {
+                    !this.state.validForm && (
+                        <Alert key="validForm" variant="danger">
+                            Please check the inputs again!
+                        </Alert>
+                    )
+                }
+                {alert}
                 <Marginer direction="vertical" margin="2em" />
                 <MutedLink href="#">Already have an account? <BoldLink href="/signin">Login</BoldLink></MutedLink>
             </FormContainer>

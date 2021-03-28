@@ -3,6 +3,7 @@ import { AccountContext } from "./accountContext";
 import { BoldLink, BoxContainer, FormContainer, Input, MutedLink, SubmitButton } from "./common";
 import { Marginer } from "./marginer";
 import AuthenticationService from '../services/AuthenticationService';
+import {Alert} from "reactstrap";
 
 class LoginForm extends Component {
 
@@ -39,10 +40,6 @@ class LoginForm extends Component {
             );
     }
 
-    //  toRegister() {
-    //      console.log("it worked");
-    //  }  
-
     render() {
         return <BoxContainer>
             <FormContainer onSubmit={this.doLogin}>
@@ -69,6 +66,13 @@ class LoginForm extends Component {
                 <MutedLink href="#">Forgot password?</MutedLink>
                 <Marginer direction="vertical" margin="2em" />
                 <SubmitButton type="submit">Login</SubmitButton>
+                {
+                this.state.error && (
+                  <Alert color="danger">
+                    {this.state.error}
+                  </Alert>
+                )
+                }
                 <Marginer direction="vertical" margin="2em" />
                 <MutedLink href="#">Don't have an account?
                     <BoldLink href="/signup" >Register</BoldLink>
