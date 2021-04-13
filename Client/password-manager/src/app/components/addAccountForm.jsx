@@ -1,15 +1,23 @@
 import React, {Component} from "react";
-import { BoxContainer, FormContainer } from "./common";
-import { Marginer } from "./marginer";
+import axios from "axios";
 
 class AddAccountForm extends Component {
-    constructor(props) {
-        super(props);
+    
+    addAccount = async (platforma, password) => {
 
-        this.state = {
-            account: "",
-            password: ""
-        };
+        const userID = JSON.parse(localStorage.getItem('user'));
+        console.log(userID.id);
+        return axios.post("/users/accounts/"+userID.id+"/addAccount",{
+            platforma,
+            password
+        })
+        .then(response => {
+            
+        })
+        .catch(err => {
+            console.log(err);
+            throw err;
+        });
     }
 
     backToProfile = () => {
@@ -19,12 +27,12 @@ class AddAccountForm extends Component {
     render(){
         return (
             <div style={{marginTop:"20px"}}>
-                <h2>Add a new account</h2>
+                <h2>Add a new platform</h2>
                 <ul>
                 <input type="text"
-                    name="account"
-                    id="account"
-                    placeholder="Account"
+                    name="platforma"
+                    id="platforma"
+                    placeholder="Platform"
                 />
                 </ul>
 
@@ -35,7 +43,7 @@ class AddAccountForm extends Component {
                     placeholder="Password"
                 />
                 </ul>
-                <button>ADD</button>
+                <button onClick={this.addAccount}>ADD</button>
                 <button onClick={this.backToProfile}>Back to profile</button>
             </div>
         );
