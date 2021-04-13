@@ -13,9 +13,9 @@ public class JwtResponse {
     private List<String> roles;
 
 
-    public JwtResponse(String token,String id) {
+    public JwtResponse(String token,String id,List<String> roles) {
         this.token = token;
-
+        this.roles = roles;
         this.id = id;
 
     }

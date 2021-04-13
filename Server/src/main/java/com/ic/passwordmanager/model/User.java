@@ -2,6 +2,7 @@ package com.ic.passwordmanager.model;
 
 
 
+import com.ic.passwordmanager.service.AccountService;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Document(collection = "user")
 public class User {
@@ -61,6 +63,7 @@ public class User {
     }
 
     public List<Account> getAccounts() {
+
         return accounts;
     }
 
@@ -82,6 +85,11 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void addAccount(Account account){
+        this.accounts.add(account);
+
     }
 
 }

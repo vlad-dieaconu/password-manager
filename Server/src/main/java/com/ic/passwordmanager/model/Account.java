@@ -5,11 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Entity
+
 public class Account {
-    @Id
-    @GeneratedValue
-    private String id;
+
+
     private String platforma;
     private String password;
 
@@ -22,13 +21,6 @@ public class Account {
 
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getPlatforma() {
         return platforma;

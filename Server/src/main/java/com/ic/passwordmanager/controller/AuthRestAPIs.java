@@ -71,11 +71,10 @@ public class AuthRestAPIs {
 
         return ResponseEntity.ok(new JwtResponse(
                 jwt,
-                userDetails.getId()
+                userDetails.getId(),
+                roles
                 ));
     }
-
-
 
 
     @PostMapping("/signup")

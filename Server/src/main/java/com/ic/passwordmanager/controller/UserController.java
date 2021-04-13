@@ -45,10 +45,26 @@ public class UserController {
     User findUserByEmail(@PathVariable String email){
         return repo.findByEmail(email);
     }
+    @GetMapping("/users")
+    List<User> allGroups() {
+
+        return repo.findAll();
+    }
+
+    @PostMapping("users/accounts/{id}/addAccount")
+    void addNewAccount(@PathVariable String id, @RequestHeader (name="Authorization") String token,@RequestBody Account account){
+        String[] parts = token.split(" ");
+
+        if(id.equals(jwtProvider.getIDFromJwtToken(parts[1]))){
+            User user = repo.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                user.addAccount(account);
+
+        }
+    }
+
 
     @GetMapping("users/accounts/{id}")
     List<Account> findAccountsById(@PathVariable String id,@RequestHeader (name="Authorization") String token){
-
         String[] parts = token.split(" ");
 
         if(id.equals(jwtProvider.getIDFromJwtToken(parts[1]))){
@@ -61,11 +77,7 @@ public class UserController {
         }else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
     }
 
-    @GetMapping("/users")
-    List<User> allGroups() {
 
-        return repo.findAll();
-    }
 
 
 
