@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 
 import { Link } from 'react-router-dom';
@@ -13,9 +14,9 @@ class Profile extends Component {
     this.state = {user: undefined};
   }
 
+
   componentDidMount() {
     const user = AuthenticationService.getCurrentUser();
-    
 
     
     this.setState({user: user});
@@ -25,8 +26,11 @@ class Profile extends Component {
   signOut = () =>{
   AuthenticationService.signOut();
   this.props.history.push('/home');
-}
+  }
 
+  addAccount = () => {
+    this.props.history.push('/addAccount');
+  }
 
   render() {
     let userInfo = "";
@@ -46,9 +50,10 @@ class Profile extends Component {
                     <ul>
                       <li>Access Token: {user.accessToken}</li>
                       <li>user email: {user.email}</li>
-                      <li>user accounts:</li>
+                      <li>user accounts: </li>
                     </ul>
                   <button onClick={this.signOut}>Sign out</button>
+                  <button onClick={this.addAccount}> Add account</button>
                 </div>
               );
     } else {

@@ -6,6 +6,8 @@ import LoginForm from './app/components/loginForm';
 import Profile from './app/components/Profile';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import RegisterForm from "./app/components/registerForm";
+import axios from "axios";
+import AddAccountForm from "./app/components/addAccountForm";
 
 
 const AppContainer = styled.div`
@@ -18,9 +20,11 @@ const AppContainer = styled.div`
 `;
 
 class App extends Component {
+
+
   render() {
     return (
-      <AppContainer>
+      //<AppContainer>
         <Router>
           <Switch>
             <Route path="/" exact={true} component={LoginForm} />
@@ -28,9 +32,10 @@ class App extends Component {
             <Route path="/profile" exact={true} component={Profile} />
             <Route path="/signin" exact={true} component={LoginForm} />
             <Route path="/signup" exact={true} component={RegisterForm} />
+            <Route path="/addAccount" exact={true} component={AddAccountForm} />
           </Switch>
         </Router>
-      </AppContainer>
+      //</AppContainer>
     );
   }
 }
