@@ -1,6 +1,7 @@
 package com.ic.passwordmanager.security.jwt;
 
 import java.util.Date;
+import java.util.HashMap;
 
 
 import com.ic.passwordmanager.service.UserDetailsImpl;
@@ -26,8 +27,11 @@ public class JwtUtils {
     public String generateJwtToken(Authentication authentication) {
 
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+        HashMap<String,Object> claims = new HashMap<>();
+        claims.put("id",userPrincipal.getId());
 
         return Jwts.builder()
+                .setClaims(claims)
                 .setSubject((userPrincipal.getEmail()))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
@@ -37,6 +41,9 @@ public class JwtUtils {
 
     public String getUserNameFromJwtToken(String token) {
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+    }
+    public String getIDFromJwtToken(String token) {
+        return (String)Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().get("id");
     }
 
     public boolean validateJwtToken(String authToken) {

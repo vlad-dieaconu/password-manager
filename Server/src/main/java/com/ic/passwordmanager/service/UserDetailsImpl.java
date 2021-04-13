@@ -25,7 +25,6 @@ public class UserDetailsImpl implements UserDetails {
     private List<Account> accounts;
 
 
-
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserDetailsImpl(String id, String email, String password, List<Account> accounts,
