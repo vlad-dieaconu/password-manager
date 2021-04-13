@@ -71,10 +71,8 @@ public class AuthRestAPIs {
 
         return ResponseEntity.ok(new JwtResponse(
                 jwt,
-                userDetails.getEmail(),
-                userDetails.getId(),
-                userDetails.getAccounts(),
-                roles));
+                userDetails.getId()
+                ));
     }
 
 
