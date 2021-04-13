@@ -1,8 +1,9 @@
 package com.ic.passwordmanager.model;
 
 
+
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 
@@ -11,6 +12,7 @@ public class Account {
 
     private String platforma;
     private String password;
+
 
 
     public Account(String platforma, String password) {
@@ -45,4 +47,6 @@ public class Account {
                 ", password='" + password + '\'' +
                 '}';
     }
+
+
 }

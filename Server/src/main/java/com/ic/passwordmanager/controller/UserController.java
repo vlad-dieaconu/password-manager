@@ -55,11 +55,12 @@ public class UserController {
     void addNewAccount(@PathVariable String id, @RequestHeader (name="Authorization") String token,@RequestBody Account account){
         String[] parts = token.split(" ");
 
+
         if(id.equals(jwtProvider.getIDFromJwtToken(parts[1]))){
             User user = repo.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
-                user.addAccount(account);
-
-        }
+            user.addAccount(AccountService.encrpytPassword(account));
+            repo.save(user);
+        }else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
     }
 
 
