@@ -63,6 +63,24 @@ public class UserController {
         }else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
     }
 
+    @GetMapping("users/accounts/{id}/decrypt")
+    List<Account> getDecryptedPassword(@PathVariable String id,@RequestHeader (name="Authorization") String token){
+        String[] parts = token.split(" ");
+
+        if(id.equals(jwtProvider.getIDFromJwtToken(parts[1]))){
+            Optional<User> user = repo.findById(id);
+            if(user.isPresent()){
+                user.get().setAccounts(user.get().getAccounts().stream()
+                        .map(account -> AccountService.decryptPassword(account))
+                        .collect(Collectors.toList()));
+                return user.get().getAccounts();
+            }else throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+
+        }else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+    }
+
+
 
     @GetMapping("users/accounts/{id}")
     List<Account> findAccountsById(@PathVariable String id,@RequestHeader (name="Authorization") String token){
