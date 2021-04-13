@@ -4,6 +4,7 @@ import { Marginer } from "./marginer";
 import { AccountContext } from "./accountContext";
 import AuthenticationService from '../services/AuthenticationService';
 import { Alert } from "reactstrap";
+import { Popup } from 'semantic-ui-react';
 
 const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
 
@@ -68,13 +69,15 @@ class RegisterForm extends Component {
             AuthenticationService.register(
                 this.state.email,
                 this.state.password
+                
             ).then(
                 response => {
                     this.setState({
                         message: response.data.message,
-                        successful: true
-                    });
+                        successful: true,
+                    });  
                 },
+                
                 error => {
                     console.log("Fail! Error = " + error.toString());
 
@@ -102,6 +105,8 @@ class RegisterForm extends Component {
                         {this.state.message}
                     </Alert>
                 );
+               
+                
             } else {
                 alert = (
                     <Alert variant="danger">
@@ -142,14 +147,24 @@ class RegisterForm extends Component {
                                 {errors.password}
                             </Alert>
                         )
+                        
                     }
                 </FormContainer>
                 <Marginer direction="vertical" margin={15} />
                 <SubmitButton type="submit">Signup</SubmitButton>
                 {
-                    !this.state.validForm && (
-                        <Alert key="validForm" variant="danger">
-                            Please check the inputs again!
+                      !this.state.validForm && (
+                          <Alert key="validForm" variant="danger">
+                              Please check the inputs again!
+                          </Alert>
+                      )
+                }
+
+
+                {
+                    this.state.successful && (
+                        <Alert variant="success">
+                            Account created successfully!
                         </Alert>
                     )
                 }
