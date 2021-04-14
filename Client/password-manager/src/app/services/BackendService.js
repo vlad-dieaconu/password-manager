@@ -1,20 +1,22 @@
 import axios from 'axios';
 
-// Add a request interceptors
-const userID = JSON.parse(localStorage.getItem('user'));
-const accessToken = userID.accessToken
+axios.interceptors.request.use( config => {
+  const user = JSON.parse(localStorage.getItem('user'));
+///
+  if(user && user.accessToken){
+    const token = 'Bearer ' + user.accessToken;
+    config.headers.Authorization =  token;
+  }
 
-const authAxios = axios.create({
-  headers: {
-    Authorization: `Bearer ${accessToken}`,
-  },
+  return config;
 });
 
 class BackendService {
 
   addAccount = async (platforma, password) => {
-    
-    return authAxios.post("/users/accounts/" + userID.id + "/addAccount", {
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    return axios.post("/users/accounts/" + user.id + "/addAccount", {
 
         platforma,
         password
@@ -28,3 +30,4 @@ class BackendService {
 }
 
 export default new BackendService();
+
