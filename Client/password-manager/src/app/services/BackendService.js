@@ -1,21 +1,30 @@
 import axios from 'axios';
 
 // Add a request interceptors
-axios.interceptors.request.use( config => {
-  const user = JSON.parse(localStorage.getItem('user'));
+const userID = JSON.parse(localStorage.getItem('user'));
+const accessToken = userID.accessToken
 
-  if(user && user.accessToken){
-    const token = 'Bearer ' + user.accessToken;
-    config.headers.Authorization =  token;
-  }
-
-  return config;
+const authAxios = axios.create({
+  headers: {
+    Authorization: `Bearer ${accessToken}`,
+  },
 });
 
 class BackendService {
-  async getUserBoard() {
-    return await axios.get("http://localhost:8080/passwordmanager/user");
-  }
+
+  addAccount = async (platforma, password) => {
+    
+    return authAxios.post("/users/accounts/" + userID.id + "/addAccount", {
+
+        platforma,
+        password
+    })
+        .then((response) => {
+            console.log(response);
+        }, (error) => {
+            console.log(error);
+        });
+}
 }
 
 export default new BackendService();
