@@ -42,10 +42,6 @@ class AddAccountForm extends Component {
         );
     }
 
-
-
-
-
 backToProfile = () => {
     this.props.history.push('/profile');
 }
@@ -53,7 +49,7 @@ backToProfile = () => {
 render() {
     return (
         <Form onSubmit={this.addNewAccount}>
-        <div style={{ marginTop: "20px" }}>
+        <div style={{ marginTop: "100px", marginLeft: "500px"}}>
             <h2>Add a new platform</h2>
             <ul>
                 <input type="text"

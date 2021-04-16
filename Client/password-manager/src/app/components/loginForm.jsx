@@ -1,5 +1,4 @@
-import React, { useContext, Component } from "react";
-import { AccountContext } from "./accountContext";
+import React, { Component } from "react";
 import { BoldLink, BoxContainer, FormContainer, Input, MutedLink, SubmitButton } from "./common";
 import { Marginer } from "./marginer";
 import AuthenticationService from '../services/AuthenticationService';

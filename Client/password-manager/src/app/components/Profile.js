@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
-
-
+//import { Navbar } from 'reactstrap';
 import AuthenticationService from '../services/AuthenticationService';
+import { Navbar, Nav, Form } from 'react-bootstrap';
+
 
 axios.interceptors.request.use(config => {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -13,9 +13,9 @@ axios.interceptors.request.use(config => {
     const token = 'Bearer ' + user.accessToken;
     config.headers.Authorization = token;
   }
-
   return config;
 });
+
 
 class Profile extends Component {
 
@@ -26,7 +26,6 @@ class Profile extends Component {
       accounts: []
     };
   }
-
 
   componentDidMount() {
     const user = AuthenticationService.getCurrentUser();
@@ -61,17 +60,27 @@ class Profile extends Component {
     if (user && user.accessToken) {
 
       userInfo = (
-        <div style={{ marginTop: "20px" }}>
 
-          <h2>User Info</h2>
-          <ul>
-            <li>Access Token: {user.accessToken}</li>
-            {this.state.accounts && this.state.accounts.map(user => <li key={user.id}>{user.platforma}</li>)}
-            <li>user accounts: </li>
-          </ul>
-          <button onClick={this.signOut}>Sign out</button>
-          <button onClick={this.addAccount}> Add account</button>
-        </div>
+        <div>
+          <Navbar bg="dark" variant="dark" sticky="top">
+            <Form inline>
+              <button onClick={this.signOut}>Sign Out</button>
+              <Navbar.Text>Signed in as:{user.email}</Navbar.Text>
+            </Form>
+          </Navbar>
+          <div style={{ marginTop: "60px", marginLeft: "450px" }}>
+            <h2>My accounts</h2>
+            <ul>
+              {this.state.accounts && this.state.accounts.map(user =>
+                <li key={user.id}>{user.platforma}
+                  <button>Show password</button>
+                </li>)
+              }
+            </ul>
+            {/* <button onClick={this.signOut}>Sign out</button> */}
+            <button onClick={this.addAccount}> Add account</button>
+          </div></div>
+
       );
     } else {
       userInfo = <div style={{ marginTop: "20px" }}>
@@ -84,7 +93,6 @@ class Profile extends Component {
 
     return (
       <div>
-        
         {userInfo}
       </div>
 
