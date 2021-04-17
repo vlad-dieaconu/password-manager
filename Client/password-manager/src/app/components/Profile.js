@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-//import { Navbar } from 'reactstrap';
 import AuthenticationService from '../services/AuthenticationService';
 import { Navbar, Nav, Form } from 'react-bootstrap';
 
@@ -23,8 +22,10 @@ class Profile extends Component {
     super(props);
     this.state = {
       user: undefined,
-      accounts: []
+      accounts: [],
     };
+
+    this.handleEdit = this.handleEdit.bind(this);
   }
 
   componentDidMount() {
@@ -43,6 +44,26 @@ class Profile extends Component {
 
   }
 
+
+  handleEdit = (e,index) => {
+    e.preventDefault();
+    const user = AuthenticationService.getCurrentUser();
+    return axios.get("/users/accounts/" + user.id + "/decrypt").
+      then(
+        res => {
+          const accountsBefore = this.state.accounts;
+          accountsBefore[index] = res.data[index];
+       
+          this.setState({
+            accountsBefore,
+          });
+
+        }
+      )
+
+
+  };
+
   signOut = () => {
     AuthenticationService.signOut();
     this.props.history.push('/home');
@@ -55,34 +76,42 @@ class Profile extends Component {
   render() {
     let userInfo = "";
     const user = this.state.user;
+    const { showButtonIndex, showbutton } = this.state;
 
-    // login
+
     if (user && user.accessToken) {
 
       userInfo = (
 
         <div>
+
           <Navbar bg="dark" variant="dark" sticky="top">
             <Form inline>
               <button onClick={this.signOut}>Sign Out</button>
               <Navbar.Text>Signed in as:{user.email}</Navbar.Text>
             </Form>
           </Navbar>
+
           <div style={{ marginTop: "60px", marginLeft: "450px" }}>
             <h2>My accounts</h2>
             <ul>
-              {this.state.accounts && this.state.accounts.map(user =>
-                <li key={user.id}>{user.platforma}
-                  <button>Show password</button>
-                </li>)
+
+              {this.state.accounts && this.state.accounts.map((user =>
+                <li key={user.id}>Platorma:{user.platforma}  Password:{user.password}
+                  <button onClick={(e) => this.handleEdit(e, this.state.accounts.indexOf(user))}>Show password</button>
+                  
+                </li>))
+   
               }
             </ul>
-            {/* <button onClick={this.signOut}>Sign out</button> */}
             <button onClick={this.addAccount}> Add account</button>
-          </div></div>
+          </div>
+
+        </div>
 
       );
-    } else {
+    }
+    else {
       userInfo = <div style={{ marginTop: "20px" }}>
 
         <h2>Profile Component</h2>
