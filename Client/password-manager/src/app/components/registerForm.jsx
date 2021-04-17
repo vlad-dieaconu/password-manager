@@ -1,10 +1,8 @@
 import React, { useContext, Component } from "react";
-import { BoldLink, BoxContainer, FormContainer, Input, MutedLink, SubmitButton } from "./common";
-import { Marginer } from "./marginer";
-import { AccountContext } from "./accountContext";
+import { BoldLink } from "./common";
 import AuthenticationService from '../services/AuthenticationService';
 import { Alert } from "reactstrap";
-import { Popup } from 'semantic-ui-react';
+
 
 const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
 
@@ -69,15 +67,15 @@ class RegisterForm extends Component {
             AuthenticationService.register(
                 this.state.email,
                 this.state.password
-                
+
             ).then(
                 response => {
                     this.setState({
                         message: response.data.message,
                         successful: true,
-                    });  
+                    });
                 },
-                
+
                 error => {
                     console.log("Fail! Error = " + error.toString());
 
@@ -90,7 +88,6 @@ class RegisterForm extends Component {
         }
     }
 
-    //const {switchToLogin} = useContext(AccountContext);
 
     render() {
 
@@ -105,8 +102,8 @@ class RegisterForm extends Component {
                         {this.state.message}
                     </Alert>
                 );
-               
-                
+
+
             } else {
                 alert = (
                     <Alert variant="danger">
@@ -115,64 +112,77 @@ class RegisterForm extends Component {
                 );
             }
         }
-        return <BoxContainer>
-            <FormContainer onSubmit={this.signUp}>
-                <FormContainer>
-                    <Marginer direction="vertical" margin={10} />
-                    <Input type="text"
-                        placeholder="Email"
-                        name="email"
-                        id="email"
-                        value={this.state.email}
-                        onChange={this.changeHandler}
-                    />
-                    {
-                        errors.email && (
-                            <Alert variant="danger">
-                                {errors.email}
-                            </Alert>
-                        )
-                    }
+        return <body>
+            <div class="container">
+                <div class="forms-container">
+                    <div class="signin-signup">
+                        <form onSubmit={this.signUp} class="sign-up-form">
+                            <h2 class="title">Sign up</h2>
+                            <div class="input-field">
+                                <i class="fas fa-user"></i>
+                                <input type="text"
+                                    placeholder="Email"
+                                    name="email"
+                                    id="email"
+                                    value={this.state.email}
+                                    onChange={this.changeHandler}
+                                />
+                            </div>
 
-                    <Input type="password"
-                        placeholder="Password"
-                        name="password"
-                        id="password"
-                        value={this.state.password}
-                        onChange={this.changeHandler}
-                    />
-                    {
-                        errors.password && (
-                            <Alert key="errorspassword" variant="danger">
-                                {errors.password}
-                            </Alert>
-                        )
-                        
-                    }
-                </FormContainer>
-                <Marginer direction="vertical" margin={15} />
-                <SubmitButton type="submit">Signup</SubmitButton>
-                {
-                      !this.state.validForm && (
-                          <Alert key="validForm" variant="danger">
-                              Please check the inputs again!
-                          </Alert>
-                      )
-                }
+                            {
+                                errors.email && (
+                                    <Alert variant="danger">
+                                        {errors.email}
+                                    </Alert>
+                                )
+                            }
+                            <div class="input-field">
+                                <i class="fas fa-lock"></i>
+                                <input type="password"
+                                    placeholder="Password"
+                                    name="password"
+                                    id="password"
+                                    value={this.state.password}
+                                    onChange={this.changeHandler}
+                                />
+                            </div>
+                            {
+                                errors.password && (
+                                    <Alert key="errorspassword" variant="danger">
+                                        {errors.password}
+                                    </Alert>
+                                )
+
+                            }
 
 
-                {
-                    this.state.successful && (
-                        <Alert variant="success">
-                            Account created successfully!
-                        </Alert>
-                    )
-                }
-                {alert}
-                <Marginer direction="vertical" margin="2em" />
-                <MutedLink href="#">Already have an account? <BoldLink href="/signin">Login</BoldLink></MutedLink>
-            </FormContainer>
-        </BoxContainer>
+                            <button type="submit" class="btn-solid">Signup</button>
+                            {
+                                !this.state.validForm && (
+                                    <Alert key="validForm" variant="danger">
+                                        Please check the inputs again!
+                                    </Alert>
+                                )
+                            }
+
+
+                            {
+                                this.state.successful && (
+                                    <Alert variant="success">
+                                        Account created successfully!
+                                    </Alert>
+                                )
+                            }
+                            {alert}
+
+                            <p href="#">Already have an account?
+                    <BoldLink href="/signin">Login</BoldLink>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </body>
     }
 }
 export default RegisterForm;
