@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BoldLink } from "./common";
 import AuthenticationService from '../services/AuthenticationService';
-import Logo from '../res/security.png';
+import Social from '../res/social.svg';
 import { Alert } from "reactstrap";
 
 
@@ -50,7 +50,7 @@ class LoginForm extends Component {
                             <h2 class="title">Sign in</h2>
 
                             <div class="input-field">
-                                <i class="user-icon"></i>
+                                <i class="email-icon"></i>
                                 <input type="text"
                                     name="email"
                                     id="email"
@@ -95,13 +95,14 @@ class LoginForm extends Component {
                             <h1>About 1Password</h1>
                             <p>The ultimate Password Manager, 1Password remembers them all for you.
                                 Use strong, unique passwords and a password manager to keep track of them.</p>
-                            
+                            <br></br>
                             <h3>Store all your passwords in one secure place</h3>
                             <h3>Zero-knowledge encryption so only you can access your passwords</h3>
                             <h3>Go ahead! Forget your password!</h3>
+                            
                         </div>
 
-                        {<img src={Logo} class="image"/>}
+                        {<img src={Social} class="image-login"/>}
                     </div>
                 </div>
 

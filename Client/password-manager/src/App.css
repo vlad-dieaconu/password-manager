@@ -82,10 +82,17 @@ form.sign-up-form {
   border-radius: 55px;
   display: grid;
   grid-template-columns: 15% 85%;
-  padding: 0.4rem;
+  padding: 0 .4rem;
 }
 
-input-field input {
+.input-field i {
+  text-align: center;
+  line-height: 55px;
+  color: #acacac;
+  font-size: 1.1rem;
+}
+
+.input-field input {
   background: none;
   outline: none;
   border: none;
@@ -120,8 +127,14 @@ input-field input {
   font-size: 1rem;
 }
 
-.image {
-  width: 80%;
+.image-login {
+  width: 71%;
+  margin-top: 10px;
+}
+
+.image-register {
+  width: 75%;
+  margin-top: 60px;
 }
 
 .panels-container {
@@ -131,15 +144,21 @@ input-field input {
   grid-template-columns: repeat(auto-fill, 600px) 20%;
 }
 
-
-h1 {
-  text-align: center;
+.panel .content {
+  color: #fff;
 }
 
-h3 {
-  font-size: 15px;
+.panel h1 {
+  text-align: center;
+  letter-spacing: 3px;
+  font-size: 30px;
+}
+
+.panel h3 {
   margin-left: 20px;
-  margin-top: 10px;
+  font-weight: 500;
+  line-height: 1;
+  font-size: 1rem;
 }
 
 h3:before {
@@ -147,8 +166,16 @@ h3:before {
   margin-right: 10px;
 }
 
-p {
-  text-indent: 20px;
+.panel p {
+  text-indent: 30px;
   margin-top: 7px;
   margin-left: 10px;
+  font-size: 0.9rem;
+}
+
+.panel h4 {
+  font-weight: 600;
+  line-height: 1;
+  font-size: 1rem;
+  text-align: center;
 }

@@ -2,6 +2,7 @@ import React, { useContext, Component } from "react";
 import { BoldLink } from "./common";
 import AuthenticationService from '../services/AuthenticationService';
 import { Alert } from "reactstrap";
+import Safe from '../res/safe.svg';
 
 
 const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
@@ -176,11 +177,27 @@ class RegisterForm extends Component {
                             {alert}
 
                             <p href="#">Already have an account?
-                    <BoldLink href="/signin">Login</BoldLink>
+                                <BoldLink href="/signin">Login</BoldLink>
                             </p>
                         </form>
                     </div>
                 </div>
+
+                <div class="panels-container">
+                    <div class="panel left-panel">
+                        <div class="content" type="text">
+                            <h1>Let's get you set up</h1>
+                            <p>It should only take a couple of minutes to create your account</p>
+                            <br></br>
+                            <h4>We lock passwords</h4>
+                            <h4>You hold the key</h4>
+                            <h4>It has never been easier</h4>
+                        </div>
+
+                        {<img src={Safe} class="image-register"/>}
+                    </div>
+                </div>
+
             </div>
         </body>
     }
