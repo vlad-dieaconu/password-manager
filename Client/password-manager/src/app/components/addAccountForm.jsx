@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 import BackendService from "../services/BackendService";
 import { Form } from "reactstrap";
 

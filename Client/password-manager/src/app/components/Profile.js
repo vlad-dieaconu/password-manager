@@ -80,15 +80,14 @@ class Profile extends Component {
 
 
     if (user && user.accessToken) {
-
       userInfo = (
 
         <div>
 
           <Navbar bg="dark" variant="dark" sticky="top">
             <Form inline>
-              <button onClick={this.signOut}>Sign Out</button>
               <Navbar.Text>Signed in as:{user.email}</Navbar.Text>
+              <button onClick={this.signOut}>Sign Out</button>
             </Form>
           </Navbar>
 

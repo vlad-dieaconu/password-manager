@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import './App.css';
-import AccountContext from './app/components/accountContext'
 import styled from "styled-components";
 import LoginForm from './app/components/loginForm';
 import Profile from './app/components/Profile';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import RegisterForm from "./app/components/registerForm";
-import axios from "axios";
 import AddAccountForm from "./app/components/addAccountForm";
 
 
