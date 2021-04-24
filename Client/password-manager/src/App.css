@@ -179,3 +179,31 @@ h3:before {
   font-size: 1rem;
   text-align: center;
 }
+
+.header {
+  background-color: #6C717B;   
+  height: 50px;  
+}
+
+.nav-text {
+  margin-left: 20px;
+  font-size: 1.2rem;
+  color: #fff;
+  margin-top: 7px;
+}
+
+.nav-btn {
+  border-radius: 49px;
+  width: 100px;
+  height: 35px;
+  font-weight: 600;
+  background-color: #5995fd;
+  border: none;
+  outline: none;
+  color: #fff;
+  text-transform: uppercase;
+  transition: .5s;
+  cursor: pointer;
+  margin-left: 700px;
+  margin-top: 7px;
+}

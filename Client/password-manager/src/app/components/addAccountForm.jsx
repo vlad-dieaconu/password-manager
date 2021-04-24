@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import BackendService from "../services/BackendService";
-import { Form } from "reactstrap";
 
 class AddAccountForm extends Component {
 
@@ -63,7 +62,7 @@ class AddAccountForm extends Component {
                                 onChange={this.changeHandler}
                             />
                         </div>
-                        
+                        <br></br>
                         <div class="input-field">
                             <i class="password-icon"></i>
                             <input type="password"

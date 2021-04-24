@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import AuthenticationService from '../services/AuthenticationService';
 import { Navbar, Nav, Form } from 'react-bootstrap';
 
-
 axios.interceptors.request.use(config => {
   const user = JSON.parse(localStorage.getItem('user'));
 
@@ -81,22 +80,20 @@ class Profile extends Component {
 
     if (user && user.accessToken) {
       userInfo = (
-
         <div>
-
-          <Navbar bg="dark" variant="dark" sticky="top">
-            <Form inline>
-              <Navbar.Text>Signed in as:{user.email}</Navbar.Text>
-              <button onClick={this.signOut}>Sign Out</button>
-            </Form>
-          </Navbar>
+          <Nav class="header">
+            <Nav.Item>
+              <Navbar.Text class="nav-text">Signed in as: {user.email}</Navbar.Text>
+              <button class="nav-btn" onClick={this.signOut}>Sign Out</button>
+            </Nav.Item>
+          </Nav>
 
           <div style={{ marginTop: "60px", marginLeft: "450px" }}>
             <h2>My accounts</h2>
             <ul>
 
               {this.state.accounts && this.state.accounts.map((user =>
-                <li key={user.id}>Platorma:{user.platforma}  Password:{user.password}
+                <li key={user.id}>Platforma:{user.platforma}  Password:{user.password}
                   <button onClick={(e) => this.handleEdit(e, this.state.accounts.indexOf(user))}>Show password</button>
                   
                 </li>))
