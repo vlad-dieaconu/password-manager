@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import AuthenticationService from '../services/AuthenticationService';
-import { Navbar, Nav, Form } from 'react-bootstrap';
+import { Navbar, Nav, Form, Table } from 'react-bootstrap';
 
 axios.interceptors.request.use(config => {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -44,7 +44,7 @@ class Profile extends Component {
   }
 
 
-  handleEdit = (e,index) => {
+  handleEdit = (e, index) => {
     e.preventDefault();
     const user = AuthenticationService.getCurrentUser();
     return axios.get("/users/accounts/" + user.id + "/decrypt").
@@ -52,7 +52,7 @@ class Profile extends Component {
         res => {
           const accountsBefore = this.state.accounts;
           accountsBefore[index] = res.data[index];
-       
+
           this.setState({
             accountsBefore,
           });
@@ -88,20 +88,41 @@ class Profile extends Component {
             </Nav.Item>
           </Nav>
 
-          <div style={{ marginTop: "60px", marginLeft: "450px" }}>
-            <h2>My accounts</h2>
-            <ul>
-
-              {this.state.accounts && this.state.accounts.map((user =>
-                <li key={user.id}>Platforma:{user.platforma}  Password:{user.password}
-                  <button onClick={(e) => this.handleEdit(e, this.state.accounts.indexOf(user))}>Show password</button>
-                  
-                </li>))
-   
-              }
-            </ul>
-            <button onClick={this.addAccount}> Add account</button>
+          <div style={{ marginTop: "30px", marginLeft: "500px", marginBottom: "20px"}}>
+            <h2>My accounts <button class= "addAcc-btn" onClick={this.addAccount}> Add account</button></h2>
           </div>
+
+          <Table class="table">
+            <thead class="table-customize">
+              <tr>
+                <th> <tr>PLATFORM</tr>
+                {this.state.accounts && this.state.accounts.map((user =>
+                  <tr key={user.id}>{user.platforma}
+                  </tr>))
+                }
+                </th>
+
+                <th> <tr>PASSWORD</tr>
+                {this.state.accounts && this.state.accounts.map((user =>
+                  <tr key={user.id}>{user.password}
+                  </tr>))
+                }
+                </th>
+
+                <th> <tr>CLICK ME!</tr>
+                {this.state.accounts && this.state.accounts.map((user =>
+                  <tr key={user.id}><button class="table-btn" onClick={(e) => this.handleEdit(e, this.state.accounts.indexOf(user))}>Show password</button>
+                  </tr>))
+                }
+                </th>
+
+              </tr>
+            </thead>
+          </Table>
+
+          
+          
+
 
         </div>
 
@@ -120,9 +141,15 @@ class Profile extends Component {
       <div>
         {userInfo}
       </div>
-
     );
   }
 }
 
 export default Profile;
+
+// {this.state.accounts && this.state.accounts.map((user =>
+//   <th key={user.id}>Platform:{user.platforma}  Password:{user.password}
+//     <button onClick={(e) => this.handleEdit(e, this.state.accounts.indexOf(user))}>Show password</button>
+
+//   </th>))
+// }

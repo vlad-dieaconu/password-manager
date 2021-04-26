@@ -101,7 +101,7 @@ class LoginForm extends Component {
                             <h3>Go ahead! Forget your password!</h3>
                             
                         </div>
-
+                    
                         {<img src={Social} class="image-login"/>}
                     </div>
                 </div>
