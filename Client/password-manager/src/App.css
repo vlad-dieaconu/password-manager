@@ -207,6 +207,7 @@ form.sign-up-form {
   width: 50%;
   margin-left: 300px;
 }
+
 .table-customize {
   background-color: #6C717B; 
 }
@@ -219,6 +220,7 @@ th {
   border: 1px solid rgb(0, 0, 0);
   padding: 10px;
   text-align: center;
+  border-radius: 35px;
 }
 
 td {
@@ -254,6 +256,23 @@ td {
   cursor: pointer;
   margin-left: 80px;
 }
+
+tbody {
+  background-color: #7E838E;
+  font-weight: bold;
+}
+
+.plat {
+  color: #fff;
+}
+
+html, profile-body {
+  height: 100%;
+  background-color: #5995fd;
+  background-image: linear-gradient(to right,#5995fd, #9fb8ec);
+}
+
+
 
 
 

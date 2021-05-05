@@ -88,41 +88,54 @@ class Profile extends Component {
             </Nav.Item>
           </Nav>
 
-          <div style={{ marginTop: "30px", marginLeft: "500px", marginBottom: "20px"}}>
-            <h2>My accounts <button class= "addAcc-btn" onClick={this.addAccount}> Add account</button></h2>
+          <div style={{ marginTop: "30px", marginLeft: "500px", marginBottom: "20px" }}>
+            <h2>My accounts <button class="addAcc-btn" onClick={this.addAccount}> Add account</button></h2>
           </div>
+
 
           <Table class="table">
             <thead class="table-customize">
+              <tr class="plat">
+                <th >PLATFORM</th>
+                <th>PASSWORD</th>
+                <th>CLICK ME!</th>
+              </tr>
+            </thead>
+
+            <tbody>
               <tr>
-                <th> <tr>PLATFORM</tr>
-                {this.state.accounts && this.state.accounts.map((user =>
-                  <tr key={user.id}>{user.platforma}
-                  </tr>))
-                }
+                <th>
+                  <td>
+                    {this.state.accounts && this.state.accounts.map((user =>
+                      <tr key={user.id}>{user.platforma}
+                      </tr>))
+                    }
+                  </td>
                 </th>
 
-                <th> <tr>PASSWORD</tr>
-                {this.state.accounts && this.state.accounts.map((user =>
-                  <tr key={user.id}>{user.password}
-                  </tr>))
-                }
+                <th>
+                  <td>
+                    {this.state.accounts && this.state.accounts.map((user =>
+                      <tr key={user.id}>{user.password}
+                      </tr>))
+                    }
+                  </td>
                 </th>
 
-                <th> <tr>CLICK ME!</tr>
-                {this.state.accounts && this.state.accounts.map((user =>
-                  <tr key={user.id}><button class="table-btn" onClick={(e) => this.handleEdit(e, this.state.accounts.indexOf(user))}>Show password</button>
-                  </tr>))
-                }
+                <th>
+                  <td>
+                    {this.state.accounts && this.state.accounts.map((user =>
+                      <tr key={user.id}><button class="table-btn" onClick={(e) => this.handleEdit(e, this.state.accounts.indexOf(user))}>Show password</button>
+                      </tr>))
+                    }
+                  </td>
                 </th>
 
               </tr>
-            </thead>
+
+            </tbody>
+
           </Table>
-
-          
-          
-
 
         </div>
 
@@ -138,7 +151,7 @@ class Profile extends Component {
     }
 
     return (
-      <div>
+      <div class="profile-body">
         {userInfo}
       </div>
     );
@@ -146,10 +159,3 @@ class Profile extends Component {
 }
 
 export default Profile;
-
-// {this.state.accounts && this.state.accounts.map((user =>
-//   <th key={user.id}>Platform:{user.platforma}  Password:{user.password}
-//     <button onClick={(e) => this.handleEdit(e, this.state.accounts.indexOf(user))}>Show password</button>
-
-//   </th>))
-// }
