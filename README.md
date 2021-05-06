@@ -14,7 +14,7 @@ Pentru înregistrare se folosește adresa de email și o parolă (parola pe care
 
 #### Utilizarea aplicației
 
-Odată logat, ușer-ul va putea adaugă noi platforme pentru a reține parola pe care aceasta o folosește. Mai apoi va putea observa toate platformele pe care acesta le-a salvat, iar în momentul în care va da click pe una din ele, pentru a se afișa parola pe care o folosește, va trebui să introducă parola pe care a folosit-o la crearea contului în aplicația noastră. Daca la un moment dat nu mai folosește acea parola sau acea platforma ușer-ul va putea să șteargă contul din lista sa.
+Odată logat, ușer-ul va putea adaugă noi platforme pentru a reține parola pe care aceasta o folosește. Mai apoi va putea observa toate platformele pe care acesta le-a salvat, iar în momentul în care va da click pe una din ele, pentru a se afișa parola pe care o folosește, va trebui să introducă parola pe care a folosit-o la crearea contului în aplicația noastră. Daca la un moment dat nu mai folosește acea parola sau acea platforma user-ul va putea să șteargă contul din lista sa.
 
 #### Ușer Interface
 
