@@ -6,7 +6,13 @@ import com.ic.passwordmanager.repositories.UserRepository;
 import com.ic.passwordmanager.security.jwt.JwtUtils;
 import com.ic.passwordmanager.service.AccountService;
 import com.ic.passwordmanager.service.UserService;
+import com.mongodb.BasicDBObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,6 +30,9 @@ public class UserController {
 
     @Autowired
     JwtUtils jwtProvider;
+
+    @Autowired
+    MongoTemplate mongoTemplate;
 
 
     public UserController(UserRepository repo) {
@@ -45,6 +54,7 @@ public class UserController {
     User findUserByEmail(@PathVariable String email){
         return repo.findByEmail(email);
     }
+
     @GetMapping("/users")
     List<User> allGroups() {
 
@@ -54,7 +64,6 @@ public class UserController {
     @PostMapping("users/accounts/{id}/addAccount")
     void addNewAccount(@PathVariable String id, @RequestHeader (name="Authorization") String token,@RequestBody Account account){
         String[] parts = token.split(" ");
-
 
         if(id.equals(jwtProvider.getIDFromJwtToken(parts[1]))){
             User user = repo.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -82,6 +91,8 @@ public class UserController {
 
 
 
+
+
     @GetMapping("users/accounts/{id}")
     List<Account> findAccountsById(@PathVariable String id,@RequestHeader (name="Authorization") String token){
         String[] parts = token.split(" ");
@@ -89,11 +100,39 @@ public class UserController {
         if(id.equals(jwtProvider.getIDFromJwtToken(parts[1]))){
             Optional<User> user = repo.findById(id);
             if(user.isPresent()){
+
                 return user.get().getAccounts();
             }else throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
 
         }else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+    }
+
+    @DeleteMapping("/users/accounts/{id}/{platforma}")
+    public void deleteAccountByPlatformName(@PathVariable String id, @PathVariable String platforma,@RequestHeader (name="Authorization") String token){
+
+        String[] parts = token.split(" ");
+
+        if(id.equals(jwtProvider.getIDFromJwtToken(parts[1]))){
+            Optional<User> user = repo.findById(id);
+
+            if(user.isPresent()){
+                Query query = Query.query(Criteria
+                        .where("accounts")
+                        .elemMatch(
+                                Criteria.where("platforma").is(platforma)
+                        ));
+                Update update =
+                        new Update().pull("accounts",
+                                new BasicDBObject("platforma",platforma));
+                mongoTemplate.updateMulti(query,update,User.class);
+
+            }else throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+
+        }else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+    }
+
     }
 
 
@@ -107,5 +146,5 @@ public class UserController {
 
 
 
-}
+
 

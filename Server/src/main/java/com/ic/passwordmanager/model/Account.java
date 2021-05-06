@@ -1,5 +1,9 @@
 package com.ic.passwordmanager.model;
 
+import org.springframework.data.annotation.Id;
+
+import javax.persistence.GeneratedValue;
+
 public class Account {
 
 
@@ -9,12 +13,14 @@ public class Account {
 
 
     public Account(String platforma, String password) {
+
         this.platforma = platforma;
         this.password = password;
     }
     public Account(){
 
     }
+
 
 
     public String getPlatforma() {
