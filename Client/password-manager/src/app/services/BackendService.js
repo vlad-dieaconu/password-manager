@@ -27,6 +27,8 @@ class BackendService {
             console.log(error);
         });
 }
+
+
 }
 
 export default new BackendService();

@@ -25,6 +25,7 @@ class Profile extends Component {
     };
 
     this.handleEdit = this.handleEdit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -57,6 +58,26 @@ class Profile extends Component {
             accountsBefore,
           });
 
+        }
+      )
+
+
+  };
+
+  handleDelete = (e, index) => {
+    
+    e.preventDefault();
+    console.log(index);
+    const user = AuthenticationService.getCurrentUser();
+    
+    return axios.delete("/users/accounts/" + user.id + "/"+ this.state.accounts[index].platforma).
+      then(
+         res => {
+          const newAccounts = this.state.accounts.splice(index,1)
+          
+          this.setState({
+            newAccounts,
+          });
         }
       )
 
@@ -126,6 +147,15 @@ class Profile extends Component {
                   <td>
                     {this.state.accounts && this.state.accounts.map((user =>
                       <tr key={user.id}><button class="table-btn" onClick={(e) => this.handleEdit(e, this.state.accounts.indexOf(user))}>Show password</button>
+                      </tr>))
+                    }
+                  </td>
+                </th>
+
+                <th>
+                  <td>
+                    {this.state.accounts && this.state.accounts.map((user =>
+                      <tr key={user.id}><button class="table-btn" onClick={(e) => this.handleDelete(e, this.state.accounts.indexOf(user))}>Delete</button>
                       </tr>))
                     }
                   </td>
