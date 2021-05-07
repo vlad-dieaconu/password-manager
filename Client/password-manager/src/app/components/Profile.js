@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import AuthenticationService from '../services/AuthenticationService';
 import { Navbar, Nav, Form, Table } from 'react-bootstrap';
+import ProfilePic from '../res/profile.svg';
+import ProfilePic2 from '../res/profile2.svg';
+import ProfileAuth from '../res/auth.svg';
 
 axios.interceptors.request.use(config => {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -115,9 +118,9 @@ class Profile extends Component {
 
 
           <Table class="table">
-            <thead class="table-customize">
-              <tr class="plat">
-                <th >PLATFORM</th>
+            <thead class="plat">
+              <tr>
+                <th>PLATFORM</th>
                 <th>PASSWORD</th>
                 <th>CLICK ME!</th>
               </tr>
@@ -164,9 +167,14 @@ class Profile extends Component {
               </tr>
 
             </tbody>
-
+            {<img src={ProfilePic2} class="image-profile2"/>}
+            {<img src={ProfileAuth} class="image-auth"/>}
+            {<img src={ProfilePic} class="image-profile"/>}
+            
+            
+            
           </Table>
-
+          
         </div>
 
       );

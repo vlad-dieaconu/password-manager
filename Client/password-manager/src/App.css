@@ -204,12 +204,9 @@ form.sign-up-form {
 }
 
 .table {
-  width: 50%;
-  margin-left: 300px;
-}
-
-.table-customize {
-  background-color: #6C717B; 
+  width: 90%;
+  display: block;
+  margin-left: 100px;
 }
 
 tr {
@@ -217,10 +214,8 @@ tr {
 }
 
 th {
-  border: 1px solid rgb(0, 0, 0);
   padding: 10px;
   text-align: center;
-  border-radius: 35px;
 }
 
 td {
@@ -258,12 +253,18 @@ td {
 }
 
 tbody {
-  background-color: #7E838E;
   font-weight: bold;
+  width: 90%;
+  display: table;
+  position: relative;
 }
 
 .plat {
   color: #fff;
+  width: 70%;
+  display: table;
+  margin: 0;
+  margin-left: -70px;
 }
 
 html, profile-body {
@@ -271,6 +272,23 @@ html, profile-body {
   background-color: #5995fd;
   background-image: linear-gradient(to right,#5995fd, #9fb8ec);
 }
+
+.image-profile {
+  width: 30%;
+  margin-top: 15px;
+}
+
+.image-profile2 {
+  width: 30%;
+  margin-top: 18px;
+  margin-right: 40px;
+}
+
+.image-auth {
+  width: 30%;
+  margin-top: 18px;
+}
+
 
 
 
