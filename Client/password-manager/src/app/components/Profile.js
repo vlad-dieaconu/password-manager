@@ -68,16 +68,16 @@ class Profile extends Component {
   };
 
   handleDelete = (e, index) => {
-    
+
     e.preventDefault();
     console.log(index);
     const user = AuthenticationService.getCurrentUser();
-    
-    return axios.delete("/users/accounts/" + user.id + "/"+ this.state.accounts[index].platforma).
+
+    return axios.delete("/users/accounts/" + user.id + "/" + this.state.accounts[index].platforma).
       then(
-         res => {
-          const newAccounts = this.state.accounts.splice(index,1)
-          
+        res => {
+          const newAccounts = this.state.accounts.splice(index, 1)
+
           this.setState({
             newAccounts,
           });
@@ -109,24 +109,23 @@ class Profile extends Component {
             <Nav.Item>
               <Navbar.Text class="nav-text">Signed in as: {user.email}</Navbar.Text>
               <button class="nav-btn" onClick={this.signOut}>Sign Out</button>
+              <button class="addAcc-btn" onClick={this.addAccount}> Add account</button>
             </Nav.Item>
           </Nav>
 
-          <div style={{ marginTop: "30px", marginLeft: "500px", marginBottom: "20px" }}>
-            <h2>My accounts <button class="addAcc-btn" onClick={this.addAccount}> Add account</button></h2>
+          <div style={{ marginTop: "30px", textAlign: "center", marginBottom: "20px" }}>
+            <h2>My accounts </h2>
           </div>
 
 
-          <Table class="table">
-            <thead class="plat">
-              <tr>
+          <table class="table">
+    
+            <tbody>
+            <tr class="titles">
                 <th>PLATFORM</th>
                 <th>PASSWORD</th>
                 <th>CLICK ME!</th>
               </tr>
-            </thead>
-
-            <tbody>
               <tr>
                 <th>
                   <td>
@@ -158,7 +157,7 @@ class Profile extends Component {
                 <th>
                   <td>
                     {this.state.accounts && this.state.accounts.map((user =>
-                      <tr key={user.id}><button class="table-btn" onClick={(e) => this.handleDelete(e, this.state.accounts.indexOf(user))}>Delete</button>
+                      <tr key={user.id}><button class="table-btn-delete" onClick={(e) => this.handleDelete(e, this.state.accounts.indexOf(user))}>Delete</button>
                       </tr>))
                     }
                   </td>
@@ -167,13 +166,11 @@ class Profile extends Component {
               </tr>
 
             </tbody>
-            {<img src={ProfilePic2} class="image-profile2"/>}
-            {<img src={ProfileAuth} class="image-auth"/>}
-            {<img src={ProfilePic} class="image-profile"/>}
-            
-            
-            
-          </Table>
+
+          </table>
+          {<img src={ProfilePic2} class="image-profile2" />}
+          {<img src={ProfileAuth} class="image-auth" />}
+          {<img src={ProfilePic} class="image-profile" />}
           
         </div>
 
